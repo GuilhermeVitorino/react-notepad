@@ -18,14 +18,18 @@ class App extends Component {
     })
   }
 
-  render() {
+  deleteNote(index) {
+    let noteList = this.state.notes
+    noteList.splice(index, 1);
+    this.setState({ notes: noteList })
+  }
 
-    const { notes } = this.state;
+  render() {
 
     return (
       <section className="content">
         <FormRegister createNote={this.createNote_App.bind(this)} />
-        <NoteList noteList={this.state.notes} />
+        <NoteList noteList={this.state.notes} deleteNote={this.deleteNote.bind(this)} />
       </section>
     );
   }
