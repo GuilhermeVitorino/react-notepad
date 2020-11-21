@@ -13,8 +13,8 @@ class App extends Component {
     }
   }
 
-  createNote_App(title, text) {
-    const newNote = { title, text }
+  createNote_App(title, text, category) {
+    const newNote = { title, text, category }
     this.setState({
       notes: [...this.state.notes, newNote]
     })
@@ -35,7 +35,9 @@ class App extends Component {
 
     return (
       <section className="content">
-        <FormRegister createNote={this.createNote_App.bind(this)} />
+        <FormRegister 
+          categories={this.state.categories}
+          createNote={this.createNote_App.bind(this)} />
         <main className="content-main">
           <CategoryList
             categories={this.state.categories}

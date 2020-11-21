@@ -7,32 +7,42 @@ class FormRegister extends Component {
    super(props); 
    this.title = '';
    this.text = '';
+   this.category = 'No category';
    this.props = props;
   }
   
   _handleTitleChange(e){
     e.stopPropagation();
     this.title = e.target.value;
-    console.log(this.title)
   }
   
   _handleTextChange(e){
     e.stopPropagation();
     this.text = e.target.value;
-    console.log(this.text)
   }
   
+  _handleCategoryChange(e){
+    e.stopPropagation();
+    this.category = e.target.value;
+  }
+
   _createNote(e){
     e.preventDefault();
     e.stopPropagation();
-    this.props.createNote(this.title, this.text)
+    this.props.createNote(this.title, this.text, this.category)
   }
 
   render() {
     return (
-      <form 
-        className="form-register"
-        onSubmit={this._createNote.bind(this)}>
+      <form className="form-register" onSubmit={this._createNote.bind(this)}>
+        <select className="form-register_input"
+                 onChange={this._handleCategoryChange.bind(this)}
+        >
+          <option defaultChecked={true}>No category</option>
+          {this.props.categories.map(category => {
+            return <option>{category}</option>
+          })}
+        </select>
         <input 
           type="text" 
           placeholder="Title"
