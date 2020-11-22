@@ -8,7 +8,20 @@ class FormRegister extends Component {
    this.title = '';
    this.text = '';
    this.category = 'No category';
-   this.props = props;
+   this.state = {categories:[]}
+   this._newCategoriesRef = this._newCategories.bind(this);
+  }
+
+  componentDidMount(){
+    this.props.categories.subscribe(this._newCategoriesRef);
+  }
+
+  componentWillUnmount(){
+    this.props.categories.unsubscribe(this._newCategoriesRef);
+  }
+
+  _newCategories(categories) {
+    this.setState({...this.state, categories})
   }
   
   _handleTitleChange(e){
@@ -39,8 +52,8 @@ class FormRegister extends Component {
                  onChange={this._handleCategoryChange.bind(this)}
         >
           <option defaultChecked={true}>No category</option>
-          {this.props.categories.map(category => {
-            return <option>{category}</option>
+          {this.state.categories.map((category, index) => {
+            return <option key={index}>{category}</option>
           })}
         </select>
         <input 
